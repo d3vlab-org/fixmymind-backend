@@ -36,7 +36,7 @@
         ]
     },
     "nelmio/api-doc-bundle": {
-        "version": "5.3",
+        "version": "4.38",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
             "branch": "main",
