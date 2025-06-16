@@ -7,9 +7,4 @@ nelmio_api_doc:
 
   areas:
     default:
-      path_patterns: [ ^/api ]
-      documentation:
-        info:
-          title: FixMyMind API (default)
-          description: Dokumentacja API aplikacji terapeutycznej
-          version: 1.0.0
+      path_patterns: [ ^/api, ^/health ]
