@@ -74,6 +74,6 @@
         "doctrine/doctrine-migrations-bundle": "^3.4",
         "doctrine/orm": "^3.4",
         "symfony/maker-bundle": "^1.63",
-        "zircote/swagger-php": "*"
+        "zircote/swagger-php": "^5.1"
     }
 }
