@@ -18,3 +18,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    Nelmio\ApiDocBundle\Controller\SwaggerUiController:
+        arguments:
+            $renderOpenApi: '@nelmio_api_doc.render_docs'
+            $uiRenderer: 'swagger_ui'
+        tags: [ 'controller.service_arguments' ]
+        public: true
