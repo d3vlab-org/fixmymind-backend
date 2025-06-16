@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FixMyMind API Docs</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
+    <style>
+      body, html { margin: 0; padding: 0; height: 100%; }
+      #redoc { height: 100%; }
+    </style>
+  </head>
+  <body>
+    <div id="redoc"></div>
+    <script>
+      Redoc.init(
+        '{{ app.request.getSchemeAndHttpHost() }}/api/doc.json',
+        {},
+        document.getElementById('redoc')
+      );
+    </script>
+  </body>
+</html>
