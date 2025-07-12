@@ -1,0 +1,57 @@
+[
+    {
+        "name": "FixMyMind – Free",
+        "price": 0,
+        "currency": "PLN",
+        "interval": "month",
+        "limit": 10,
+        "features": [
+            "Podstawowy dostęp do terapeuty AI",
+            "Brak głosu",
+            "Brak historii sesji"
+        ],
+        "stripe_price_id": null
+    },
+    {
+        "name": "FixMyMind – Starter",
+        "price": 1999,
+        "currency": "PLN",
+        "interval": "month",
+        "limit": 200,
+        "features": [
+            "200 wiadomości \/ miesiąc",
+            "Standardowy głos terapeuty",
+            "Historia sesji",
+            "Analiza emocji"
+        ],
+        "stripe_price_id": "price_1RjnjLPPmV6jsUdcRQudDzwD"
+    },
+    {
+        "name": "FixMyMind – Unlimited",
+        "price": 4999,
+        "currency": "PLN",
+        "interval": "month",
+        "limit": null,
+        "features": [
+            "Nielimitowane wiadomości",
+            "Głosy premium",
+            "Spersonalizowany terapeuta AI",
+            "Statystyki i analiza postępu"
+        ],
+        "stripe_price_id": "price_1RjnjMPPmV6jsUdcb1YTOrVo"
+    },
+    {
+        "name": "FixMyMind – Pro+",
+        "price": 8999,
+        "currency": "PLN",
+        "interval": "month",
+        "limit": null,
+        "features": [
+            "Wszystko z Unlimited",
+            "Priorytet w kolejce",
+            "Eksport sesji do PDF i MP3",
+            "Dedykowane wsparcie"
+        ],
+        "stripe_price_id": "price_1RjnjNPPmV6jsUdcGbRjI2Jf"
+    }
+]

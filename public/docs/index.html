@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+        name="description"
+        content="FixMyMind API Documentation"
+    />
+    <title>FixMyMind API Documentation</title>
+    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.1.3/swagger-ui.css" />
+    <style>
+        body {
+            margin: 0;
+            background: #fafafa;
+        }
+        .topbar {
+            display: none;
+        }
+        .swagger-ui .scheme-container {
+            background: #fff;
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <div id="swagger-ui"></div>
+    <script src="https://unpkg.com/swagger-ui-dist@5.1.3/swagger-ui-bundle.js" crossorigin></script>
+    <script>
+        window.onload = () => {
+            window.ui = SwaggerUIBundle({
+                url: './api-docs.json',
+                dom_id: '#swagger-ui',
+                deepLinking: true,
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIBundle.presets.standalone
+                ],
+                plugins: [
+                    SwaggerUIBundle.plugins.DownloadUrl
+                ],
+                defaultModelsExpandDepth: 1,
+                defaultModelExpandDepth: 1,
+                docExpansion: 'list',
+                filter: true,
+                showExtensions: true,
+                showCommonExtensions: true,
+                tryItOutEnabled: true,
+                requestInterceptor: (request) => {
+                    // Add CORS headers for API requests
+                    return request;
+                }
+            });
+        };
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,706 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "FixMyMind API",
+        "description": "API for therapeutic voice and text chat with AI",
+        "contact": {
+            "email": "contact@fixmymind.org"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://api.fixmymind.org/api",
+            "description": "Production API Server"
+        },
+        {
+            "url": "/api",
+            "description": "Local API Server"
+        }
+    ],
+    "paths": {
+        "/chat": {
+            "post": {
+                "tags": [
+                    "Text Chat"
+                ],
+                "summary": "Send a text message to the AI therapist",
+                "operationId": "4d0be0e9abf1d0625c11b162939065ca",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "messages": {
+                                        "description": "Array of conversation messages",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "role": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "user",
+                                                        "assistant"
+                                                    ]
+                                                },
+                                                "content": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "AI response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "reply": {
+                                            "description": "AI therapist response",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/therapist-preferences": {
+            "get": {
+                "tags": [
+                    "Therapist Preferences"
+                ],
+                "summary": "Get user's therapist preferences",
+                "operationId": "26737beb680875f4c5fa9470b67d8928",
+                "responses": {
+                    "200": {
+                        "description": "Therapist preferences retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Alex"
+                                                },
+                                                "style": {
+                                                    "type": "string",
+                                                    "example": "warm"
+                                                },
+                                                "tempo": {
+                                                    "type": "string",
+                                                    "example": "slow"
+                                                },
+                                                "tone": {
+                                                    "type": "string",
+                                                    "example": "soft"
+                                                },
+                                                "add_markers": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "ask_questions": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "generated_prompt": {
+                                                    "type": "string",
+                                                    "example": "Jesteś terapeutą o imieniu Alex..."
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No preferences found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "No therapist preferences found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Therapist Preferences"
+                ],
+                "summary": "Create or update therapist preferences",
+                "operationId": "f547cc7b735e29499eeb1b516f21c49d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Therapist name",
+                                        "type": "string",
+                                        "example": "Alex"
+                                    },
+                                    "style": {
+                                        "type": "string",
+                                        "enum": [
+                                            "warm",
+                                            "calm",
+                                            "analytical",
+                                            "motivating",
+                                            "deep"
+                                        ],
+                                        "example": "warm"
+                                    },
+                                    "tempo": {
+                                        "type": "string",
+                                        "enum": [
+                                            "slow",
+                                            "medium",
+                                            "fast"
+                                        ],
+                                        "example": "slow"
+                                    },
+                                    "tone": {
+                                        "type": "string",
+                                        "enum": [
+                                            "soft",
+                                            "neutral",
+                                            "firm"
+                                        ],
+                                        "example": "soft"
+                                    },
+                                    "add_markers": {
+                                        "description": "Add pauses and expressions like 'I understand', 'hmm'",
+                                        "type": "boolean",
+                                        "example": true
+                                    },
+                                    "ask_questions": {
+                                        "description": "Ask reflective questions",
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Therapist preferences saved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Therapist preferences saved successfully"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Alex"
+                                                },
+                                                "style": {
+                                                    "type": "string",
+                                                    "example": "warm"
+                                                },
+                                                "tempo": {
+                                                    "type": "string",
+                                                    "example": "slow"
+                                                },
+                                                "tone": {
+                                                    "type": "string",
+                                                    "example": "soft"
+                                                },
+                                                "add_markers": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "ask_questions": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "generated_prompt": {
+                                                    "type": "string",
+                                                    "example": "Jesteś terapeutą o imieniu Alex..."
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation failed"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/therapist-preferences/options": {
+            "get": {
+                "tags": [
+                    "Therapist Preferences"
+                ],
+                "summary": "Get available options for therapist preferences",
+                "operationId": "773dcc5f5b928a26e4da4ce9f4e4ff3b",
+                "responses": {
+                    "200": {
+                        "description": "Available options retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "styles": {
+                                                    "properties": {
+                                                        "warm": {
+                                                            "type": "string",
+                                                            "example": "Ciepły i wspierający"
+                                                        },
+                                                        "calm": {
+                                                            "type": "string",
+                                                            "example": "Spokojny i refleksyjny"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "tempos": {
+                                                    "properties": {
+                                                        "slow": {
+                                                            "type": "string",
+                                                            "example": "Wolno"
+                                                        },
+                                                        "medium": {
+                                                            "type": "string",
+                                                            "example": "Średnio"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "tones": {
+                                                    "properties": {
+                                                        "soft": {
+                                                            "type": "string",
+                                                            "example": "Miękki"
+                                                        },
+                                                        "neutral": {
+                                                            "type": "string",
+                                                            "example": "Neutralny"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/voice-chat": {
+            "post": {
+                "tags": [
+                    "Voice Chat"
+                ],
+                "summary": "Handle voice chat upload and response",
+                "operationId": "72dc15d9cd052af6fcf3745096b1fb7e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "file": {
+                                        "description": "Audio file to upload (supported formats: wav, mp3, mp4, m4a, flac, webm, ogg)",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "transcript": {
+                                            "description": "Transcribed text from audio",
+                                            "type": "string"
+                                        },
+                                        "text": {
+                                            "description": "AI response text",
+                                            "type": "string"
+                                        },
+                                        "audio_url": {
+                                            "description": "URL to generated audio response",
+                                            "type": "string",
+                                            "format": "url"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "Error message",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/voice-sessions": {
+            "get": {
+                "tags": [
+                    "Voice Sessions"
+                ],
+                "summary": "Get all voice chat sessions",
+                "operationId": "40b7ae1aa8cf4b86aaba0d4eb089e613",
+                "responses": {
+                    "200": {
+                        "description": "List of voice chat sessions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "user_id": {
+                                                "type": "integer",
+                                                "nullable": true
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "updated_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Voice Sessions"
+                ],
+                "summary": "Create a new voice chat session",
+                "operationId": "4831d7f74471c8e66ea5c92a6e3a5948",
+                "responses": {
+                    "200": {
+                        "description": "Session created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "description": "Session ID",
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/voice-sessions/{id}/messages": {
+            "post": {
+                "tags": [
+                    "Voice Sessions"
+                ],
+                "summary": "Store a new message in a voice session",
+                "operationId": "5851497d054a3d7d4e60c416dfb064ea",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "file": {
+                                        "description": "Audio file to upload",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Message stored successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "transcript": {
+                                            "type": "string"
+                                        },
+                                        "text": {
+                                            "type": "string"
+                                        },
+                                        "audio_url": {
+                                            "type": "string"
+                                        },
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/voice-sessions/{id}": {
+            "get": {
+                "tags": [
+                    "Voice Sessions"
+                ],
+                "summary": "Get all messages for a voice session",
+                "operationId": "af6f8d4b391e9a19467eae394160bc65",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Session messages",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "session": {
+                                            "type": "integer"
+                                        },
+                                        "messages": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "sender": {
+                                                        "type": "string"
+                                                    },
+                                                    "text": {
+                                                        "type": "string"
+                                                    },
+                                                    "audio_url": {
+                                                        "type": "string",
+                                                        "nullable": true
+                                                    },
+                                                    "timestamp": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Therapist Preferences",
+            "description": "Operations related to therapist style preferences"
+        },
+        {
+            "name": "Voice Chat",
+            "description": "Voice chat endpoints for audio processing and AI responses"
+        },
+        {
+            "name": "Voice Sessions",
+            "description": "Voice session management endpoints"
+        },
+        {
+            "name": "Text Chat",
+            "description": "Text Chat"
+        }
+    ]
+}

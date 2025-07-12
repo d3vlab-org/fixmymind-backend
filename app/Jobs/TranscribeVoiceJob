@@ -1,0 +1,149 @@
+<?php
+
+/ fixmymind-worker bootstrap (Laravel Artisan Worker)
+
+// === app/Jobs/TranscribeVoiceJob.php ===
+namespace App\Jobs;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use App\Services\WhisperService;
+use App\Models\VoiceMessage;
+
+class TranscribeVoiceJob implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    public $message;
+
+    public function __construct(VoiceMessage $message)
+    {
+        $this->message = $message;
+    }
+
+    public function handle()
+    {
+        $transcript = WhisperService::transcribe($this->message->audio_path);
+        $this->message->update(['transcript' => $transcript]);
+
+        GenerateReplyJob::dispatch($this->message);
+    }
+}
+
+
+// === app/Jobs/GenerateReplyJob.php ===
+namespace App\Jobs;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use App\Services\OpenAIService;
+use App\Models\VoiceMessage;
+
+class GenerateReplyJob implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    public $message;
+
+    public function __construct(VoiceMessage $message)
+    {
+        $this->message = $message;
+    }
+
+    public function handle()
+    {
+        $context = $this->message->session->context();
+        $reply = OpenAIService::generateReply($this->message->transcript, $context);
+
+        $aiMessage = $this->message->session->messages()->create([
+            'sender' => 'ai',
+            'message_text' => $reply,
+        ]);
+
+        SynthesizeAudioJob::dispatch($aiMessage);
+    }
+}
+
+
+// === app/Jobs/SynthesizeAudioJob.php ===
+namespace App\Jobs;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+use App\Services\ElevenLabsService;
+use App\Models\VoiceMessage;
+
+class SynthesizeAudioJob implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    public $message;
+
+    public function __construct(VoiceMessage $message)
+    {
+        $this->message = $message;
+    }
+
+    public function handle()
+    {
+        $audioUrl = ElevenLabsService::synthesize($this->message->message_text);
+        $this->message->update(['audio_url' => $audioUrl]);
+    }
+}
+
+
+// === app/Services/WhisperService.php ===
+namespace App\Services;
+
+class WhisperService
+{
+    public static function transcribe($filePath)
+    {
+        // fake call – replace with real Whisper API or whisper.cpp
+        return 'Zinterpretowana transkrypcja';
+    }
+}
+
+
+// === app/Services/OpenAIService.php ===
+namespace App\Services;
+
+class OpenAIService
+{
+    public static function generateReply($text, $context)
+    {
+        return "To bardzo ciekawe, powiedz więcej o tym.";
+    }
+}
+
+
+// === app/Services/ElevenLabsService.php ===
+namespace App\Services;
+
+class ElevenLabsService
+{
+    public static function synthesize($text)
+    {
+        return 'https://cdn.fixmymind.org/audio/fake.mp3';
+    }
+}
+
+
+// === routes/console.php (test command) ===
+use App\Models\VoiceMessage;
+use App\Jobs\TranscribeVoiceJob;
+
+Artisan::command('test:run-pipeline', function () {
+    $msg = VoiceMessage::latest()->first();
+    TranscribeVoiceJob::dispatch($msg);
+    $this->info('Pipeline triggered.');
+});
