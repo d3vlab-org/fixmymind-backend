@@ -15,6 +15,13 @@ class GenerateReplyJob implements ShouldQueue
 {
 use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+/**
+ * The name of the queue the job should be sent to.
+ *
+ * @var string
+ */
+public $queue = 'gpt';
+
 public $message;
 
 public function __construct(VoiceMessage $message)
@@ -35,4 +42,3 @@ $aiMessage = $this->message->session->messages()->create([
 SynthesizeAudioJob::dispatch($aiMessage);
 }
 }
-

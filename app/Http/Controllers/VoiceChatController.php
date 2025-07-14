@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\VoiceSession;
+use App\Jobs\TranscribeAudio;
 
 /**
  * @OA\Tag(
@@ -280,97 +280,26 @@ class VoiceChatController extends Controller
             return response()->json(['error' => 'Unsupported audio format'], 400);
         }
 
-        $filename = Str::uuid() . '.' . $ext;
-        $tmpPath = storage_path('app/tmp');
-
-        if (!file_exists($tmpPath)) {
-            mkdir($tmpPath, 0755, true);
-        }
-
-        $file->move($tmpPath, $filename);
-        $fullPath = $tmpPath . '/' . $filename;
-
-        // 1. Transkrypcja
-        $whisper = Http::withToken(env('OPENAI_API_KEY'))
-            ->attach('file', file_get_contents($fullPath), $filename)
-            ->post('https://api.openai.com/v1/audio/transcriptions', [
-                'model' => 'whisper-1',
-                'language' => 'pl',
-            ]);
-
-        if ($whisper->failed()) {
-            return response()->json(['error' => 'Whisper failed.'], 500);
-        }
-
-        $transcript = $whisper->json('text');
-
-        // 2. GPT
-        $chat = Http::withToken(env('OPENAI_API_KEY'))
-            ->post('https://api.openai.com/v1/chat/completions', [
-                'model' => 'gpt-4o',
-                'messages' => [
-                    ['role' => 'system', 'content' => 'Jesteś pomocnym terapeutą. Odpowiadaj po polsku, ciepło i krótko.'],
-                    ['role' => 'user', 'content' => $transcript],
-                ],
-                'max_tokens' => 150,
-                'temperature' => 0.7,
-            ]);
-
-        if ($chat->failed()) {
-            return response()->json(['error' => 'GPT failed.'], 500);
-        }
-
-        $reply = $chat->json('choices.0.message.content');
-
-        // 3. ElevenLabs
-        $tts = Http::withHeaders([
-            'xi-api-key' => env('ELEVENLABS_API_KEY'),
-            'Accept' => 'audio/mpeg',
-            'Content-Type' => 'application/json',
-        ])->post("https://api.elevenlabs.io/v1/text-to-speech/" . env('ELEVENLABS_VOICE_ID'), [
-            'text' => $reply,
-            'model_id' => 'eleven_multilingual_v2',
-            'voice_settings' => [
-                'stability' => 0.7,
-                'similarity_boost' => 0.9,
-            ],
-        ]);
-
-        if ($tts->failed()) {
-            return response()->json(['error' => 'TTS failed.'], 500);
-        }
-
-        $audioFilename = 'ai/' . Str::uuid() . '.mp3';
-        Storage::disk('public')->put($audioFilename, $tts->body());
+        // Store the audio file
+        $audioFilename = 'user/' . Str::uuid() . '.' . $ext;
+        $audioPath = $file->storeAs('public', $audioFilename);
         $audioUrl = asset('storage/' . $audioFilename);
 
-        // 4. Zapis wiadomości
-        $now = now();
-
-        $userMessage = $session->messages()->create([
+        // Create a new voice message
+        $voiceMessage = $session->messages()->create([
             'sender' => 'user',
-            'text' => $transcript,
-            'audio_url' => null,
-            'timestamp' => $now,
-        ]);
-
-        $aiMessage = $session->messages()->create([
-            'sender' => 'ai',
-            'text' => $reply,
+            'text' => null, // Will be filled by the TranscribeAudio job
             'audio_url' => $audioUrl,
-            'timestamp' => $now->copy()->addSecond(),
+            'timestamp' => now(),
         ]);
 
-        // 5. Sprzątanie
-        if (file_exists($fullPath)) {
-            unlink($fullPath);
-        }
+        // Dispatch the TranscribeAudio job
+        TranscribeAudio::dispatch($voiceMessage);
 
         return response()->json([
-            'transcript' => $transcript,
-            'text' => $reply,
+            'message' => 'Audio uploaded successfully and transcription job dispatched',
             'audio_url' => $audioUrl,
-            'messages' => [$userMessage, $aiMessage]
+            'messages' => $session->messages()->orderBy('timestamp', 'asc')->get(),
         ]);
     }
 

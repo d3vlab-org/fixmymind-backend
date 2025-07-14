@@ -137,9 +137,11 @@ return [
     'providers' => \Illuminate\Support\ServiceProvider::defaultProviders()->merge([
         // Package Service Providers...
         Kreait\Laravel\Firebase\ServiceProvider::class,
+        Laravel\Horizon\HorizonServiceProvider::class,
     ])->merge([
         // Application Service Providers...
         App\Providers\AppServiceProvider::class,
+        App\Providers\HorizonServiceProvider::class,
     ])->merge([
         // Added Service Providers (Do not remove this line)...
     ])->toArray(),

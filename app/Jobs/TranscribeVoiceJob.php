@@ -15,6 +15,13 @@ class TranscribeVoiceJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * The name of the queue the job should be sent to.
+     *
+     * @var string
+     */
+    public $queue = 'stt';
+
     public $message;
 
     public function __construct(VoiceMessage $message)
@@ -30,4 +37,3 @@ class TranscribeVoiceJob implements ShouldQueue
         GenerateReplyJob::dispatch($this->message);
     }
 }
-
