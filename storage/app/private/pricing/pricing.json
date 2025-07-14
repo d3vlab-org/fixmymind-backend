@@ -10,8 +10,7 @@
             "Brak głosu",
             "Brak historii sesji"
         ],
-        "stripe_price_id": null,
-        "link": null
+        "stripe_price_id": null
     },
     {
         "name": "FixMyMind – Starter",
@@ -20,13 +19,12 @@
         "interval": "month",
         "limit": 200,
         "features": [
-            "200 wiadomości / miesiąc",
+            "200 wiadomości \/ miesiąc",
             "Standardowy głos terapeuty",
             "Historia sesji",
             "Analiza emocji"
         ],
-        "stripe_price_id": "price_1RjnjLPPmV6jsUdcRQudDzwD",
-        "link": "https://buy.stripe.com/7sY3cubi16XqgyUfYG9R600"
+        "stripe_price_id": "price_1RjnjLPPmV6jsUdcRQudDzwD"
     },
     {
         "name": "FixMyMind – Unlimited",
@@ -40,8 +38,7 @@
             "Spersonalizowany terapeuta AI",
             "Statystyki i analiza postępu"
         ],
-        "stripe_price_id": "price_1RjnjMPPmV6jsUdcb1YTOrVo",
-        "link": null
+        "stripe_price_id": "price_1RjnjMPPmV6jsUdcb1YTOrVo"
     },
     {
         "name": "FixMyMind – Pro+",
@@ -55,7 +52,6 @@
             "Eksport sesji do PDF i MP3",
             "Dedykowane wsparcie"
         ],
-        "stripe_price_id": "price_1RjnjNPPmV6jsUdcGbRjI2Jf",
-        "link": null
+        "stripe_price_id": "price_1RjnjNPPmV6jsUdcGbRjI2Jf"
     }
 ]

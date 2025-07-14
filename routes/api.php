@@ -9,6 +9,7 @@ use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\VoiceSessionController;
 use App\Http\Controllers\VoiceMessageController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\UserProfileController;
 
 
 
@@ -18,7 +19,7 @@ Route::get('/checkout/success', fn () => view('checkout-success'));
 Route::get('/checkout/cancel', fn () => view('checkout-cancel'));
 
 // Public routes
-Route::get('/pricing', [PricingController::class, 'index']);
+Route::get('/pricing.json', [PricingController::class, 'index']);
 
 // Temporarily disabled Firebase authentication until credentials are configured
 // Route::middleware(['firebase'])->group(function () {
@@ -62,6 +63,13 @@ Route::get('/me', function () {
         'created_at' => now()->subDays(30)->toISOString(),
         'updated_at' => now()->toISOString(),
         'authenticated' => false,
+        'theme_preference' => 'dark',
         'note' => 'This endpoint will return real user data once authentication is properly configured.'
     ]);
 });
+
+// User profile routes (temporarily unprotected)
+Route::get('/profile', [UserProfileController::class, 'getProfile']);
+Route::put('/profile/name', [UserProfileController::class, 'updateName']);
+Route::put('/profile/password', [UserProfileController::class, 'updatePassword']);
+Route::put('/profile/theme', [UserProfileController::class, 'updateThemePreference']);

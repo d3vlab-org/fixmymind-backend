@@ -10,7 +10,7 @@ class PricingController extends Controller
     public function index()
     {
         try {
-            $json = Storage::get('app/pricing/pricing.json');
+            $json = Storage::get('pricing/pricing.json');
             $plans = json_decode($json, true);
 
             return response()->json($plans);
