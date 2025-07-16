@@ -71,7 +71,7 @@ jobs:
         if: inputs.env-name == 'prod'
         run: |
           cd fixmymind-backend
-          fly deploy --config fly.prod.toml
+          fly deploy --config fly.toml
 
       - name: Deploy to Test
         if: inputs.env-name == 'test'
