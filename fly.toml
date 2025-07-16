@@ -1,4 +1,4 @@
-app = "fixmymind-api"
+app = "fixmymind-backend"
 primary_region = "fra"
 
 [build]
