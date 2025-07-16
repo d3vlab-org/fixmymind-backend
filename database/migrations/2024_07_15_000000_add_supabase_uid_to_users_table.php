@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('firebase_uid')->nullable()->unique()->after('id');
+            $table->string('supabase_uid')->nullable()->unique()->after('email');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('firebase_uid');
+            $table->dropColumn('supabase_uid');
         });
     }
 };

@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine
+FROM php:8.2-fpm-alpine
 
 # Ustaw katalog roboczy
 WORKDIR /var/www/html
@@ -17,7 +17,10 @@ RUN apk update && apk add --no-cache \
     postgresql-dev \
     curl \
     bash \
-    git
+    git \
+    redis \
+    supervisor \
+    nginx
 
 # Rozszerzenia PHP (install in separate steps to isolate issues)
 RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql exif pcntl bcmath
@@ -32,11 +35,11 @@ RUN docker-php-ext-configure mbstring --disable-mbregex || \
     ONIG_CFLAGS="-I/usr/include" ONIG_LIBS="-L/usr/lib -lonig" docker-php-ext-configure mbstring
 RUN docker-php-ext-install mbstring
 
+# Instalacja Redis extension
+RUN pecl install redis && docker-php-ext-enable redis
+
 # Instalacja Composera
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Ustaw katalog roboczy
-WORKDIR /var/www/html
 
 # Skopiuj pliki projektu
 COPY . .
@@ -48,6 +51,17 @@ RUN composer install --no-interaction --prefer-dist --no-scripts
 RUN chown -R www-data:www-data /var/www/html/storage \
     && chown -R www-data:www-data /var/www/html/bootstrap/cache
 
-EXPOSE 9000
+# Konfiguracja Supervisor
+RUN mkdir -p /etc/supervisor/conf.d
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-CMD ["php-fpm"]
+# Skrypt startowy
+COPY docker/start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+
+# Zmienne środowiskowe
+ENV APP_ROLE=web
+
+EXPOSE 8080 9000
+
+CMD ["/usr/local/bin/start.sh"]

@@ -37,8 +37,7 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        // 👇 DODAJ TO
-        'firebase' => \App\Http\Middleware\VerifyFirebaseMiddleware::class
+        'supabase' => \App\Http\Middleware\VerifySupabaseToken::class
     ];
 
     protected $commands = [

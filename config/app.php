@@ -136,7 +136,6 @@ return [
 
     'providers' => \Illuminate\Support\ServiceProvider::defaultProviders()->merge([
         // Package Service Providers...
-        Kreait\Laravel\Firebase\ServiceProvider::class,
         Laravel\Horizon\HorizonServiceProvider::class,
     ])->merge([
         // Application Service Providers...
@@ -158,7 +157,7 @@ return [
     */
 
     'aliases' => \Illuminate\Support\Facades\Facade::defaultAliases()->merge([
-        'Firebase' => Kreait\Laravel\Firebase\Facades\Firebase::class,
+        // Add your aliases here
     ])->toArray(),
 
 ];

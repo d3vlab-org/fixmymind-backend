@@ -3,12 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PricingController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\SubscriptionController;
-use App\Http\Controllers\VoiceSessionController;
-use App\Http\Controllers\VoiceMessageController;
-use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserProfileController;
 
 
@@ -37,14 +35,14 @@ Route::get('/pricing.json', [PricingController::class, 'index']);
         ]);
     });
 
-    // Voice sessions (temporarily unprotected)
-    Route::apiResource('voice-sessions', VoiceSessionController::class);
-    Route::apiResource('voice-messages', VoiceMessageController::class);
+    // Voice sessions (temporarily unprotected) - Controllers not implemented yet
+    // Route::apiResource('voice-sessions', VoiceSessionController::class);
+    // Route::apiResource('voice-messages', VoiceMessageController::class);
 
-    // Psychometric tests (temporarily unprotected)
-    Route::get('/tests', [TestController::class, 'index']);
-    Route::get('/tests/{test}', [TestController::class, 'show']);
-    Route::post('/tests/{test}/submit', [TestController::class, 'submit']);
+    // Psychometric tests (temporarily unprotected) - Controller not implemented yet
+    // Route::get('/tests', [TestController::class, 'index']);
+    // Route::get('/tests/{test}', [TestController::class, 'show']);
+    // Route::post('/tests/{test}/submit', [TestController::class, 'submit']);
 
     // Stripe routes (commented out until StripeController is implemented)
     // Route::post('/subscribe', [StripeController::class, 'subscribe']);
@@ -73,3 +71,13 @@ Route::get('/profile', [UserProfileController::class, 'getProfile']);
 Route::put('/profile/name', [UserProfileController::class, 'updateName']);
 Route::put('/profile/password', [UserProfileController::class, 'updatePassword']);
 Route::put('/profile/theme', [UserProfileController::class, 'updateThemePreference']);
+
+// Routes with VerifySupabaseToken middleware
+Route::middleware(['supabase'])->group(function () {
+    Route::get('/me', [AuthController::class, 'me']);
+});
+
+// Supabase authenticated routes
+Route::middleware(['supabase'])->prefix('auth')->group(function () {
+    Route::get('/me', [AuthController::class, 'me']);
+});

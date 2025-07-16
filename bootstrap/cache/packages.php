@@ -1,15 +1,4 @@
 <?php return array (
-  'kreait/laravel-firebase' => 
-  array (
-    'aliases' => 
-    array (
-      'Firebase' => 'Kreait\\Laravel\\Firebase\\Facades\\Firebase',
-    ),
-    'providers' => 
-    array (
-      0 => 'Kreait\\Laravel\\Firebase\\ServiceProvider',
-    ),
-  ),
   'laravel/horizon' => 
   array (
     'aliases' => 

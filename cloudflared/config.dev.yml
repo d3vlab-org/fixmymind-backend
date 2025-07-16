@@ -1,0 +1,14 @@
+tunnel: fixmymind-dev
+credentials-file: .cloudflared/fixmymind-dev.json
+
+ingress:
+  - hostname: dev.fixmymind.org
+    service: http://localhost:8081
+  - hostname: api.fixmymind.org
+    service: http://localhost:8080
+    originRequest:
+      headers:
+        Access-Control-Allow-Origin: '*'
+        Access-Control-Allow-Methods: 'POST, OPTIONS'
+        Access-Control-Allow-Headers: '*'
+  - service: http_status:404

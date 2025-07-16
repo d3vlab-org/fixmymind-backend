@@ -63,5 +63,8 @@ return [
         'voice_id' => env('ELEVENLABS_VOICE_ID', 'default'),
     ],
 
-];
+    'supabase' => [
+        'jwk_url' => env('SUPABASE_JWK_URL'),
+    ],
 
+];

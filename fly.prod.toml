@@ -1,0 +1,73 @@
+app = "fixmymind-api"
+primary_region = "fra"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  APP_ENV = "production"
+  APP_URL = "https://api.fixmymind.org"
+  QUEUE_CONNECTION = "redis"
+  REDIS_URL = "redis://production-redis-host:6379"
+  APP_KEY = "base64:PRODUCTION_KEY_SHOULD_BE_GENERATED_HERE"
+  LOG_LEVEL = "error"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+  [[http_service.ports]]
+    port = 80
+    handlers = ["http"]
+    force_https = true
+
+  [[http_service.ports]]
+    port = 443
+    handlers = ["tls", "http"]
+
+  [http_service.concurrency]
+    type = "connections"
+    hard_limit = 25
+    soft_limit = 20
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 8080
+  processes = ["app"]
+
+  [[services.ports]]
+    port = "80"
+    handlers = ["http"]
+    force_https = true
+
+  [[services.ports]]
+    port = "443"
+    handlers = ["tls", "http"]
+
+  [services.concurrency]
+    type = "connections"
+    hard_limit = 25
+    soft_limit = 20
+
+  [[services.tcp_checks]]
+    interval = "15s"
+    timeout = "2s"
+    grace_period = "1s"
+    restart_limit = 0
+
+  [[services.http_checks]]
+    interval = "10s"
+    timeout = "2s"
+    grace_period = "1s"
+    restart_limit = 0
+    method = "get"
+    path = "/"
+    protocol = "http"
+    tls_skip_verify = false
+
+[processes]
+  app = "php artisan serve --host=0.0.0.0 --port=8080"

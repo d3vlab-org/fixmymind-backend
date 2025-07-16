@@ -26,6 +26,7 @@ class User extends Authenticatable
         'email',
         'password',
         'theme_preference',
+        'supabase_uid',
     ];
 
     /**
@@ -57,5 +58,16 @@ class User extends Authenticatable
     public function therapistPreference(): HasOne
     {
         return $this->hasOne(TherapistPreference::class);
+    }
+
+    /**
+     * Find a user by their Supabase UID.
+     *
+     * @param string $supabaseUid
+     * @return \App\Models\User|null
+     */
+    public static function findBySupabaseUid(string $supabaseUid): ?User
+    {
+        return static::where('supabase_uid', $supabaseUid)->first();
     }
 }
