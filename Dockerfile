@@ -36,16 +36,14 @@ RUN docker-php-ext-configure mbstring --disable-mbregex || \
 RUN docker-php-ext-install mbstring
 
 # Instalacja Redis extension
-RUN apt-get update && apt-get install -y \
+RUN apk add --no-cache --virtual .build-deps \
     autoconf \
-    build-essential \
+    build-base \
     libtool \
-    pkg-config \
+    pkgconfig \
     && pecl install redis \
     && docker-php-ext-enable redis \
-    && apt-get remove --purge -y autoconf build-essential libtool pkg-config \
-    && apt-get autoremove -y \
-    && apt-get clean
+    && apk del .build-deps
 
 # Instalacja Composera
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
