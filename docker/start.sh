@@ -33,8 +33,16 @@ EOF
 # Sprawdź APP_ROLE i dodaj odpowiednie programy
 case "$APP_ROLE" in
     "web")
-        echo "Configuring for web server (PHP-FPM)..."
+        echo "Configuring for web server (Nginx + PHP-FPM)..."
         cat >> /tmp/supervisord.conf << EOF
+[program:nginx]
+command=nginx -g "daemon off;"
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/supervisor/nginx.stderr.log
+stdout_logfile=/var/log/supervisor/nginx.stdout.log
+user=root
+
 [program:php-fpm]
 command=php-fpm
 autostart=true
@@ -74,8 +82,16 @@ stdout_logfile_maxbytes=100MB
 EOF
         ;;
     "all")
-        echo "Configuring for all services (web + worker)..."
+        echo "Configuring for all services (nginx + web + worker)..."
         cat >> /tmp/supervisord.conf << EOF
+[program:nginx]
+command=nginx -g "daemon off;"
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/supervisor/nginx.stderr.log
+stdout_logfile=/var/log/supervisor/nginx.stdout.log
+user=root
+
 [program:php-fpm]
 command=php-fpm
 autostart=true

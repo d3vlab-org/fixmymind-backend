@@ -57,9 +57,22 @@ RUN composer install --no-interaction --prefer-dist --no-scripts --no-dev --opti
 # Skopiuj pliki projektu
 COPY . .
 
+# Utwórz wymagane katalogi Laravel
+RUN mkdir -p /var/www/html/storage/logs \
+    && mkdir -p /var/www/html/storage/framework/cache \
+    && mkdir -p /var/www/html/storage/framework/sessions \
+    && mkdir -p /var/www/html/storage/framework/views \
+    && mkdir -p /var/www/html/bootstrap/cache
+
 # Prawa dostępu
 RUN chown -R www-data:www-data /var/www/html/storage \
-    && chown -R www-data:www-data /var/www/html/bootstrap/cache
+    && chown -R www-data:www-data /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage \
+    && chmod -R 775 /var/www/html/bootstrap/cache
+
+# Konfiguracja Nginx
+RUN mkdir -p /var/log/nginx /var/cache/nginx /var/run
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Konfiguracja Supervisor
 RUN mkdir -p /etc/supervisor/conf.d
