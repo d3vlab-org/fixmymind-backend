@@ -45,7 +45,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable redis \
     && apt-get remove --purge -y autoconf build-essential libtool pkg-config \
     && apt-get autoremove -y \
-    && apt-get clean 
+    && apt-get clean
 
 # Instalacja Composera
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
