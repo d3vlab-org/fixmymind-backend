@@ -199,69 +199,27 @@ return [
     ],
 
     'environments' => [
-        'production' => [
-            'supervisor-1' => [
-                'connection' => 'redis',
-                'queue' => ['stt'],
-                'balance' => 'auto',
-                'autoScalingStrategy' => 'time',
-                'maxProcesses' => 3,
-                'minProcesses' => 1,
-                'tries' => 1,
-                'timeout' => 120,
-            ],
-            'supervisor-2' => [
-                'connection' => 'redis',
-                'queue' => ['gpt'],
-                'balance' => 'auto',
-                'autoScalingStrategy' => 'time',
-                'maxProcesses' => 3,
-                'minProcesses' => 1,
-                'tries' => 1,
-                'timeout' => 300,
-            ],
-            'supervisor-3' => [
-                'connection' => 'redis',
-                'queue' => ['tts'],
-                'balance' => 'auto',
-                'autoScalingStrategy' => 'time',
-                'maxProcesses' => 3,
-                'minProcesses' => 1,
-                'tries' => 1,
-                'timeout' => 120,
-            ],
-        ],
-
         'local' => [
-            'supervisor-1' => [
+            'stt-supervisor' => [
                 'connection' => 'redis',
                 'queue' => ['stt'],
                 'balance' => 'auto',
-                'autoScalingStrategy' => 'time',
-                'maxProcesses' => 3,
-                'minProcesses' => 1,
-                'tries' => 1,
-                'timeout' => 120,
+                'processes' => 3,
+                'tries' => 3,
             ],
-            'supervisor-2' => [
+            'gpt-supervisor' => [
                 'connection' => 'redis',
                 'queue' => ['gpt'],
                 'balance' => 'auto',
-                'autoScalingStrategy' => 'time',
-                'maxProcesses' => 3,
-                'minProcesses' => 1,
-                'tries' => 1,
-                'timeout' => 300,
+                'processes' => 3,
+                'tries' => 3,
             ],
-            'supervisor-3' => [
+            'tts-supervisor' => [
                 'connection' => 'redis',
                 'queue' => ['tts'],
                 'balance' => 'auto',
-                'autoScalingStrategy' => 'time',
-                'maxProcesses' => 3,
-                'minProcesses' => 1,
-                'tries' => 1,
-                'timeout' => 120,
+                'processes' => 3,
+                'tries' => 3,
             ],
         ],
     ],

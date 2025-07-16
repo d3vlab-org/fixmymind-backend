@@ -59,3 +59,57 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Deployment to Railway
+
+This application is configured to be deployed on [Railway](https://railway.app). Follow these steps to deploy:
+
+### Prerequisites
+
+1. Create a Railway account if you don't have one already
+2. Install the Railway CLI: `npm i -g @railway/cli`
+3. Login to Railway: `railway login`
+
+### Deployment Steps
+
+1. Create a new project in Railway
+2. Add the required services:
+   - PostgreSQL database
+   - Redis
+
+3. Link your repository to Railway:
+   ```
+   railway link
+   ```
+
+4. Set up the environment variables in Railway dashboard:
+   - Copy the variables from `.env.railway` and set their values in the Railway dashboard
+   - Make sure to set the database and Redis connection details provided by Railway
+   - Generate a new APP_KEY using `php artisan key:generate --show` and set it in Railway
+
+5. Deploy the application:
+   ```
+   railway up
+   ```
+
+6. Once deployed, you can run migrations:
+   ```
+   railway run php artisan migrate --force
+   ```
+
+7. (Optional) Seed the database:
+   ```
+   railway run php artisan db:seed --force
+   ```
+
+### Monitoring and Scaling
+
+- You can monitor your application in the Railway dashboard
+- Scale your application as needed using Railway's scaling options
+- Set up custom domains in the Railway dashboard
+
+### Troubleshooting
+
+- Check the logs in the Railway dashboard
+- If you encounter issues with the database connection, verify the environment variables
+- For Redis connection issues, make sure the Redis service is properly configured
