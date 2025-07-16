@@ -9,7 +9,7 @@ primary_region = "fra"
   APP_URL = "https://api.fixmymind.org"
   QUEUE_CONNECTION = "redis"
   REDIS_URL = "redis://production-redis-host:6379"
-  APP_KEY = "base64:PRODUCTION_KEY_SHOULD_BE_GENERATED_HERE"
+  APP_KEY = "base64:VSt2fSymQB986sv6dxOFZNKglGM90qmNcZDrjonF4Aw="
   LOG_LEVEL = "error"
 
 [http_service]

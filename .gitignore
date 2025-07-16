@@ -1,13 +1,6 @@
 *.log
 .DS_Store
-.env
-.env.local
-.env.backup
-.env.production
-.env.railway
-.env.test
-.env.dev
-.env.prod
+.env.*
 .phpactor.json
 .phpunit.result.cache
 /.fleet

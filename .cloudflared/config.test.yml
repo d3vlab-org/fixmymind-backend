@@ -1,0 +1,14 @@
+tunnel: fixmymind-test
+credentials-file: fixmymind-dev.json
+
+ingress:
+  - hostname: test.fixmymind.org
+    service: http://localhost:8081
+  - hostname: test-api.fixmymind.org
+    service: http://localhost:8080
+    originRequest:
+      headers:
+        Access-Control-Allow-Origin: '*'
+        Access-Control-Allow-Methods: 'POST, OPTIONS'
+        Access-Control-Allow-Headers: '*'
+  - service: http_status:404
