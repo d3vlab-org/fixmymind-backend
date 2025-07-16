@@ -48,11 +48,14 @@ RUN apk add --no-cache --virtual .build-deps \
 # Instalacja Composera
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Skopiuj pliki composer dla cache'owania warstw
+COPY composer.json composer.lock ./
+
+# Instalacja zależności PHP (przed kopiowaniem kodu dla lepszego cache'owania)
+RUN composer install --no-interaction --prefer-dist --no-scripts --no-dev --optimize-autoloader --timeout=300
+
 # Skopiuj pliki projektu
 COPY . .
-
-# Instalacja zależności PHP
-RUN composer install --no-interaction --prefer-dist --no-scripts
 
 # Prawa dostępu
 RUN chown -R www-data:www-data /var/www/html/storage \
