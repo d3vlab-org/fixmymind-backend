@@ -22,3 +22,7 @@ Homestead.yaml
 Thumbs.db
 storage/app/firebase/firebase_credentials.json
 bootstrap/cache/config.php
+/storage/framework/cache/
+/storage/framework/sessions/
+/storage/framework/testing/
+/storage/framework/views/
