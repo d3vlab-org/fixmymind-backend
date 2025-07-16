@@ -65,11 +65,11 @@ jobs:
 
       - name: Setup Cloudflared
         if: inputs.env-name != 'prod'
-        run:
+        run: |
           wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
           sudo dpkg -i cloudflared-linux-amd64.deb
 
-      - name: Deploy to Fly.io (Frontend)
+      - name: Deploy to Fly.io (BACKEND)
         if: inputs.env-name == 'prod'
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
