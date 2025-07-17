@@ -37,4 +37,8 @@ jobs:
           STRIPE_WEBHOOK_SECRET=${{ secrets.STRIPE_WEBHOOK_SECRET }}
           EOF
 
-      - name: Upload .env as
+      - name: Upload .env as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: env-file
+          path: .env
