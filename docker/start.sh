@@ -56,7 +56,7 @@ EOF
         echo "Configuring for development server (artisan serve)..."
         cat >> /tmp/supervisord.conf << EOF
 [program:artisan-serve]
-command=php artisan serve --host=0.0.0.0 --port=8080
+command=php artisan serve --host=127.0.0.1 --port=8080
 directory=/var/www/html
 autostart=true
 autorestart=true
