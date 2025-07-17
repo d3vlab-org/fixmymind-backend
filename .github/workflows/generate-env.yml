@@ -11,11 +11,13 @@ jobs:
       actions: write
 
     steps:
-      - name: Checkout repos
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Generate .env file
+        working-directory: ${{ github.workspace }}
         run: |
+          echo "Generating .env in $PWD"
           cat <<EOF > .env
           APP_KEY=${{ secrets.APP_KEY }}
           APP_DEBUG=${{ secrets.APP_DEBUG }}
