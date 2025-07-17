@@ -19,8 +19,7 @@ RUN apk update && apk add --no-cache \
     bash \
     git \
     redis \
-    supervisor \
-    nginx
+    supervisor
 
 # Rozszerzenia PHP (install in separate steps to isolate issues)
 RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql exif pcntl bcmath
@@ -70,9 +69,8 @@ RUN chown -R www-data:www-data /var/www/html/storage \
     && chmod -R 775 /var/www/html/storage \
     && chmod -R 775 /var/www/html/bootstrap/cache
 
-# Konfiguracja Nginx
-RUN mkdir -p /var/log/nginx /var/cache/nginx /var/run
-COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+# Konfiguracja PHP-FPM
+COPY docker/www.conf /usr/local/etc/php-fpm.d/www.conf
 
 # Konfiguracja Supervisor
 RUN mkdir -p /etc/supervisor/conf.d
@@ -85,6 +83,6 @@ RUN chmod +x /usr/local/bin/start.sh
 # Zmienne środowiskowe
 ENV APP_ROLE=web
 
-EXPOSE 8080 9000
+EXPOSE 8080
 
 CMD ["/usr/local/bin/start.sh"]
