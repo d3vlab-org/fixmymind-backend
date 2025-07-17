@@ -128,4 +128,4 @@ EOF
 esac
 
 # Uruchom Supervisor z wygenerowaną konfiguracją
-exec /usr/bin/supervisord -c /tmp/supervisord.conf
+exec /usr/bin/supervisord -n -c /tmp/supervisord.conf
