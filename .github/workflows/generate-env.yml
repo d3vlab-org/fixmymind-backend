@@ -1,0 +1,40 @@
+name: Generate .env file
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Generate .env file
+        run: |
+          cat <<EOF > .env
+          APP_KEY=${{ secrets.APP_KEY }}
+          APP_DEBUG=${{ secrets.APP_DEBUG }}
+          APP_URL=${{ secrets.APP_URL }}
+
+          LOG_CHANNEL=stack
+          LOG_LEVEL=info
+
+          DB_DATABASE=fixmymind
+          QUEUE_CONNECTION=redis
+          REDIS_HOST=redis
+
+          SUPABASE_URL=${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}
+          SUPABASE_JWK_URL=${{ secrets.SUPABASE_JWK_URL }}
+
+          OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+          ELEVENLABS_API_KEY=${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_VOICE_ID=${{ secrets.ELEVENLABS_VOICE_ID }}
+
+          STRIPE_KEY=${{ secrets.STRIPE_KEY }}
+          STRIPE_SECRET=${{ secrets.STRIPE_SECRET }}
+          STRIPE_WEBHOOK_SECRET=${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          EOF
+
+      - name: Upload .env as
