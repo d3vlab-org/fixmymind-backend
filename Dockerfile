@@ -52,7 +52,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY composer.json composer.lock ./
 
 # Instalacja zależności PHP (przed kopiowaniem kodu dla lepszego cache'owania)
-RUN composer install --no-interaction --prefer-dist --no-scripts --no-dev --optimize-autoloader --timeout=300
+RUN composer install --no-interaction --prefer-dist --no-scripts --no-dev --optimize-autoloader
 
 # Skopiuj pliki projektu
 COPY . .
