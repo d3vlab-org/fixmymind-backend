@@ -1,79 +1,78 @@
-app = "fixmymind-backend"
-primary_region = "fra"
+# fly.toml app configuration file generated for fixmymind-backend on 2025-07-17T14:38:45+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'fixmymind-backend'
+primary_region = 'fra'
 
 [build]
-  dockerfile = "Dockerfile"
+  dockerfile = 'Dockerfile'
 
-[build.args]
-  BUILDKIT_INLINE_CACHE = "1"
+  [build.args]
+    BUILDKIT_INLINE_CACHE = '1'
 
-[build.settings]
-  builder = "local"
-  buildpacks = []
+  [build.settings]
+    builder = 'local'
+    buildpacks = []
 
 [env]
-  APP_ENV = "production"
-  APP_URL = "https://api.fixmymind.org"
-  QUEUE_CONNECTION = "redis"
-  REDIS_URL = "redis://production-redis-host:6379"
-  LOG_LEVEL = "error"
+  APP_ENV = 'production'
+  APP_URL = 'https://api.fixmymind.org'
+  LOG_LEVEL = 'error'
+  QUEUE_CONNECTION = 'redis'
+  REDIS_URL = 'redis://production-redis-host:6379'
+
+[processes]
+  app = '/usr/local/bin/start.sh'
 
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = true
+  auto_stop_machines = 'stop'
   auto_start_machines = true
   min_machines_running = 0
-  processes = ["app"]
-
-  [[http_service.ports]]
-    port = 80
-    handlers = ["http"]
-    force_https = true
-
-  [[http_service.ports]]
-    port = 443
-    handlers = ["tls", "http"]
+  processes = ['app']
 
   [http_service.concurrency]
-    type = "connections"
+    type = 'connections'
     hard_limit = 25
     soft_limit = 20
 
 [[services]]
-  protocol = "tcp"
+  protocol = 'tcp'
   internal_port = 8080
-  processes = ["app"]
+  processes = ['app']
 
   [[services.ports]]
-    port = "80"
-    handlers = ["http"]
+    port = 80
+    handlers = ['http']
     force_https = true
 
   [[services.ports]]
-    port = "443"
-    handlers = ["tls", "http"]
+    port = 443
+    handlers = ['tls', 'http']
 
   [services.concurrency]
-    type = "connections"
+    type = 'connections'
     hard_limit = 25
     soft_limit = 20
 
   [[services.tcp_checks]]
-    interval = "15s"
-    timeout = "10s"
-    grace_period = "5s"
-    restart_limit = 0
+    interval = '15s'
+    timeout = '10s'
+    grace_period = '5s'
 
   [[services.http_checks]]
-    interval = "10s"
-    timeout = "10s"
-    grace_period = "5s"
-    restart_limit = 0
-    method = "get"
-    path = "/"
-    protocol = "http"
+    interval = '10s'
+    timeout = '10s'
+    grace_period = '5s'
+    method = 'get'
+    path = '/'
+    protocol = 'http'
     tls_skip_verify = false
 
-[processes]
-  app = "/usr/local/bin/start.sh"
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
