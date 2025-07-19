@@ -1,4 +1,5 @@
 #!/bin/bash
+# Skrypt startowy obsługujący php-fpm oraz artisan serve w zależności od APP_ROLE
 
 # Utwórz katalogi dla logów
 mkdir -p /var/log/supervisor
@@ -15,10 +16,13 @@ chown -R www-data:www-data /var/www/html/bootstrap/cache
 # W zależności od roli uruchom odpowiednią usługę
 case "$APP_ROLE" in
     "web")
-        exec php-fpm
+        exec php artisan serve --host=0.0.0.0 --port=8080
         ;;
     "dev")
         exec php artisan serve --host=0.0.0.0 --port=8080
+        ;;
+    "fpm")
+        exec php-fpm
         ;;
     "test")
         exec php artisan test

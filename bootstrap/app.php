@@ -8,7 +8,7 @@ use Illuminate\Foundation\Application;
 // 1) Ręcznie wczytujemy **najpierw** .env, a potem .env.local (nadpisując wartości)
 $basePath = dirname(__DIR__);
 $dotenv = Dotenv::createImmutable($basePath, ['.env', '.env.local']);
-$dotenv->load();  // load() wczytuje zmienne środowiskowe, .env.local nadpisze wartości z .env
+$dotenv->safeLoad(); // safeLoad wczytuje zmienne środowiskowe, ale nie rzuca błędu, gdy plik .env nie istnieje
 
 // 2) Teraz Laravel/Lumen/Zero może bezpiecznie skonfigurować aplikację,
 //    już mając gotowe $_ENV i getenv() z obu plików.
