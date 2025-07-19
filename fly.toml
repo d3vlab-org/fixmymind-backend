@@ -12,10 +12,6 @@ primary_region = 'fra'
   [build.args]
     BUILDKIT_INLINE_CACHE = '1'
 
-  [build.settings]
-    builder = 'local'
-    buildpacks = []
-
 [env]
   APP_ENV = 'production'
   APP_URL = 'https://api.fixmymind.org'
@@ -29,7 +25,7 @@ primary_region = 'fra'
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = 'stop'
+  auto_stop_machines = true
   auto_start_machines = true
   min_machines_running = 0
   processes = ['app']
@@ -72,7 +68,7 @@ primary_region = 'fra'
     protocol = 'http'
     tls_skip_verify = false
 
-[[vm]]
+[vm]
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
