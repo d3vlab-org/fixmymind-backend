@@ -2,4 +2,4 @@
 
 echo "🚀 Deploy na produkcję (Fly.io)..."
 
-fly deploy --config fly.prod.toml
+fly deploy --config fly.toml
