@@ -17,6 +17,7 @@ Route::get('/checkout/success', fn () => view('checkout-success'));
 Route::get('/checkout/cancel', fn () => view('checkout-cancel'));
 
 // Public routes
+Route::get('/health', fn () => response()->json(['status' => 'ok']));
 Route::get('/pricing.json', [PricingController::class, 'index']);
 
 // Temporarily disabled Firebase authentication until credentials are configured
