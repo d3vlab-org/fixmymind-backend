@@ -56,6 +56,14 @@ jobs:
       - name: Setup Fly CLI
         if: inputs.env-name == 'prod'
         uses: superfly/flyctl-actions/setup-flyctl@master
+        with:
+          version: latest
+
+      - name: Verify Fly CLI Installation
+        if: inputs.env-name == 'prod'
+        run: |
+          fly version
+          echo "Fly CLI installed successfully"
 
       - name: Setup Docker
         if: inputs.env-name != 'prod'
@@ -69,6 +77,8 @@ jobs:
 
       - name: Deploy to Production
         if: inputs.env-name == 'prod'
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: |
           fly deploy --config fly.toml
 
