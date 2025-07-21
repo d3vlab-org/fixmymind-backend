@@ -70,13 +70,11 @@ jobs:
       - name: Deploy to Production
         if: inputs.env-name == 'prod'
         run: |
-          cd fixmymind-backend
-          fly deploy --config fly.prod.toml
+          fly deploy --config fly.toml
 
       - name: Deploy to Test
         if: inputs.env-name == 'test'
         run: |
-          cd fixmymind-backend
           docker compose -f docker-compose.yml up -d --build
           nohup cloudflared tunnel --config ./cloudflared/config.test.yml run > cloudflared.log 2>&1 &
           echo "Test deployment completed. Cloudflared tunnel started in background."
@@ -84,7 +82,6 @@ jobs:
       - name: Deploy to Dev
         if: inputs.env-name == 'dev'
         run: |
-          cd fixmymind-backend
           docker compose -f docker-compose.yml up -d --build
           nohup cloudflared tunnel --config ./cloudflared/config.dev.yml run > cloudflared.log 2>&1 &
           echo "Dev deployment completed. Cloudflared tunnel started in background."
