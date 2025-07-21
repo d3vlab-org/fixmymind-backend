@@ -36,6 +36,13 @@ class VerifySupabaseToken
 
         try {
             $payload = $this->tokenValidator->validateToken($token);
+
+            // Check if user UID is allowed
+            $allowedUid = "1785dd9e-38b3-4fce-a2eb-8f468b1dac2b";
+            if ($payload->sub !== $allowedUid) {
+                return response()->json(['error' => 'under development, please check later'], 403);
+            }
+
             $user = User::findBySupabaseUid($payload->sub);
 
             if (!$user) {
