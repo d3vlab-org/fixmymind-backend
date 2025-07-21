@@ -55,9 +55,10 @@ jobs:
 
       - name: Setup Fly CLI
         if: inputs.env-name == 'prod'
-        uses: superfly/flyctl-actions/setup-flyctl@master
-        with:
-          version: latest
+        run: |
+          curl -L https://fly.io/install.sh | sh
+          echo "$HOME/.fly/bin" >> $GITHUB_PATH
+          export PATH="$HOME/.fly/bin:$PATH"
 
       - name: Verify Fly CLI Installation
         if: inputs.env-name == 'prod'
