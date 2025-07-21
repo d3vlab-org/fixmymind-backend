@@ -1,0 +1,90 @@
+name: Deploy Common
+
+on:
+  workflow_call:
+    inputs:
+      env-name:
+        required: true
+        type: string
+    secrets:
+      APP_KEY:
+        required: true
+      APP_URL:
+        required: true
+      FLY_API_TOKEN:
+        required: false
+      SUPABASE_URL:
+        required: true
+      SUPABASE_KEY:
+        required: true
+      SUPABASE_JWK_URL:
+        required: true
+      OPENAI_API_KEY:
+        required: true
+      ELEVENLABS_API_KEY:
+        required: true
+      ELEVENLABS_VOICE_ID:
+        required: true
+      STRIPE_KEY:
+        required: true
+      STRIPE_SECRET:
+        required: true
+      STRIPE_WEBHOOK_SECRET:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      APP_KEY: ${{ secrets.APP_KEY }}
+      APP_DEBUG: false
+      APP_URL: ${{ secrets.APP_URL }}
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+      SUPABASE_JWK_URL: ${{ secrets.SUPABASE_JWK_URL }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+      ELEVENLABS_VOICE_ID: ${{ secrets.ELEVENLABS_VOICE_ID }}
+      STRIPE_KEY: ${{ secrets.STRIPE_KEY }}
+      STRIPE_SECRET: ${{ secrets.STRIPE_SECRET }}
+      STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Fly CLI
+        if: inputs.env-name == 'prod'
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Setup Docker
+        if: inputs.env-name != 'prod'
+        uses: docker/setup-buildx-action@v3
+
+      - name: Setup Cloudflared
+        if: inputs.env-name != 'prod'
+        run: |
+          wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+          sudo dpkg -i cloudflared-linux-amd64.deb
+
+      - name: Deploy to Production
+        if: inputs.env-name == 'prod'
+        run: |
+          cd fixmymind-backend
+          fly deploy --config fly.prod.toml
+
+      - name: Deploy to Test
+        if: inputs.env-name == 'test'
+        run: |
+          cd fixmymind-backend
+          docker compose -f docker-compose.yml up -d --build
+          nohup cloudflared tunnel --config ./cloudflared/config.test.yml run > cloudflared.log 2>&1 &
+          echo "Test deployment completed. Cloudflared tunnel started in background."
+
+      - name: Deploy to Dev
+        if: inputs.env-name == 'dev'
+        run: |
+          cd fixmymind-backend
+          docker compose -f docker-compose.yml up -d --build
+          nohup cloudflared tunnel --config ./cloudflared/config.dev.yml run > cloudflared.log 2>&1 &
+          echo "Dev deployment completed. Cloudflared tunnel started in background."

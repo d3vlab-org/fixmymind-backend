@@ -7,7 +7,6 @@ on:
 
 jobs:
   deploy:
-    uses: ./.github/workflows/deploy-common.yml
     with:
       env-name: prod
     secrets:
