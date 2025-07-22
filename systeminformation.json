@@ -1,0 +1,99 @@
+{
+  "errors": {},
+  "info": {
+    "architecture": "arm64",
+    "cloudflaredVersion": "2025.6.1",
+    "disk": [
+      {
+        "name": "/dev/disk3s1s1",
+        "sizeCurrent": 10984480,
+        "sizeMaximum": 482797652
+      },
+      {
+        "name": "devfs",
+        "sizeCurrent": 238,
+        "sizeMaximum": 238
+      },
+      {
+        "name": "/dev/disk3s6",
+        "sizeCurrent": 5242904,
+        "sizeMaximum": 482797652
+      },
+      {
+        "name": "/dev/disk3s2",
+        "sizeCurrent": 6930592,
+        "sizeMaximum": 482797652
+      },
+      {
+        "name": "/dev/disk3s4",
+        "sizeCurrent": 3648,
+        "sizeMaximum": 482797652
+      },
+      {
+        "name": "/dev/disk2s2",
+        "sizeCurrent": 6164,
+        "sizeMaximum": 512000
+      },
+      {
+        "name": "/dev/disk2s1",
+        "sizeCurrent": 5684,
+        "sizeMaximum": 512000
+      },
+      {
+        "name": "/dev/disk2s3",
+        "sizeCurrent": 1364,
+        "sizeMaximum": 512000
+      },
+      {
+        "name": "/dev/disk3s5",
+        "sizeCurrent": 172163532,
+        "sizeMaximum": 482797652
+      },
+      {
+        "name": "/dev/disk4s2",
+        "sizeCurrent": 626330,
+        "sizeMaximum": 626330
+      },
+      {
+        "name": "/dev/disk5s1",
+        "sizeCurrent": 195888,
+        "sizeMaximum": 218720
+      },
+      {
+        "name": "/dev/disk6s2",
+        "sizeCurrent": 2058600,
+        "sizeMaximum": 2233304
+      },
+      {
+        "name": "/dev/disk7s2",
+        "sizeCurrent": 2799464,
+        "sizeMaximum": 2812116
+      },
+      {
+        "name": "/dev/disk9s1",
+        "sizeCurrent": 8630296,
+        "sizeMaximum": 8914944
+      },
+      {
+        "name": "/dev/disk11s1",
+        "sizeCurrent": 19703564,
+        "sizeMaximum": 20260864
+      },
+      {
+        "name": "/dev/disk12s1",
+        "sizeCurrent": 301780,
+        "sizeMaximum": 321496
+      }
+    ],
+    "fileDescriptorCurrent": 8490,
+    "fileDescriptorMaximum": 122880,
+    "goArch": "arm64",
+    "goVersion": "go1.24.4",
+    "hostName": "192.lan",
+    "memoryCurrent": 567968,
+    "memoryMaximum": 16777216,
+    "osRelease": "Darwin Kernel Version 24.5.0: Tue Apr 22 19:48:46 PDT 2025; root:xnu-11417.121.6~2/RELEASE_ARM64_T8103",
+    "osSystem": "Darwin",
+    "osVersion": "24.5.0"
+  }
+}

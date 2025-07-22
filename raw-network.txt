@@ -1,0 +1,18 @@
+region1.v2.argotunnel.com-v6
+no content
+region2.v2.argotunnel.com-v6
+no content
+region2.v2.argotunnel.com-v4
+ 1  192.168.100.1 (192.168.100.1)  1.153 ms  0.820 ms  0.780 ms
+ 2  nat-1750-n1-2.naszasiec.net (46.22.166.129)  1.826 ms  2.333 ms  1.361 ms
+ 3  bgp.naszasiec.net (91.224.180.1)  2.464 ms  3.081 ms  1.996 ms
+ 4  cloudflare.plix.pl (195.182.218.134)  13.625 ms  13.816 ms  16.984 ms
+ 5  162.158.100.17 (162.158.100.17)  13.674 ms  13.736 ms  12.923 ms
+
+region1.v2.argotunnel.com-v4
+ 1  192.168.100.1 (192.168.100.1)  1.170 ms  0.836 ms  0.788 ms
+ 2  nat-1750-n1-2.naszasiec.net (46.22.166.129)  1.863 ms  1.515 ms  2.216 ms
+ 3  bgp.naszasiec.net (91.224.180.1)  2.434 ms  3.130 ms  1.936 ms
+ 4  cloudflare.plix.pl (195.182.218.134)  19.689 ms  18.636 ms  13.964 ms
+ 5  162.158.100.9 (162.158.100.9)  12.986 ms  13.651 ms  13.407 ms
+

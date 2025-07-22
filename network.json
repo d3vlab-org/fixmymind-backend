@@ -1,0 +1,98 @@
+{
+  "region1.v2.argotunnel.com-v4": [
+    {
+      "hop": 1,
+      "domain": "192.168.100.1 (192.168.100.1)",
+      "rtts": [
+        1170,
+        836,
+        788
+      ]
+    },
+    {
+      "hop": 2,
+      "domain": "nat-1750-n1-2.naszasiec.net (46.22.166.129)",
+      "rtts": [
+        1863,
+        1515,
+        2216
+      ]
+    },
+    {
+      "hop": 3,
+      "domain": "bgp.naszasiec.net (91.224.180.1)",
+      "rtts": [
+        2434,
+        3130,
+        1936
+      ]
+    },
+    {
+      "hop": 4,
+      "domain": "cloudflare.plix.pl (195.182.218.134)",
+      "rtts": [
+        19689,
+        18636,
+        13964
+      ]
+    },
+    {
+      "hop": 5,
+      "domain": "162.158.100.9 (162.158.100.9)",
+      "rtts": [
+        12986,
+        13651,
+        13407
+      ]
+    }
+  ],
+  "region1.v2.argotunnel.com-v6": null,
+  "region2.v2.argotunnel.com-v4": [
+    {
+      "hop": 1,
+      "domain": "192.168.100.1 (192.168.100.1)",
+      "rtts": [
+        1153,
+        820,
+        780
+      ]
+    },
+    {
+      "hop": 2,
+      "domain": "nat-1750-n1-2.naszasiec.net (46.22.166.129)",
+      "rtts": [
+        1826,
+        2333,
+        1361
+      ]
+    },
+    {
+      "hop": 3,
+      "domain": "bgp.naszasiec.net (91.224.180.1)",
+      "rtts": [
+        2464,
+        3081,
+        1996
+      ]
+    },
+    {
+      "hop": 4,
+      "domain": "cloudflare.plix.pl (195.182.218.134)",
+      "rtts": [
+        13625,
+        13816,
+        16984
+      ]
+    },
+    {
+      "hop": 5,
+      "domain": "162.158.100.17 (162.158.100.17)",
+      "rtts": [
+        13674,
+        13736,
+        12923
+      ]
+    }
+  ],
+  "region2.v2.argotunnel.com-v6": null
+}

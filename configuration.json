@@ -1,0 +1,122 @@
+{
+  "config": {
+    "ingress": [
+      {
+        "Handlers": null,
+        "hostname": "dev.fixmymind.org",
+        "originRequest": {
+          "access": {
+            "audTag": null,
+            "teamName": ""
+          },
+          "bastionMode": false,
+          "caPool": "",
+          "connectTimeout": 30,
+          "disableChunkedEncoding": false,
+          "http2Origin": false,
+          "httpHostHeader": "",
+          "ipRules": null,
+          "keepAliveConnections": 100,
+          "keepAliveTimeout": 90,
+          "matchSNItoHost": false,
+          "noHappyEyeballs": false,
+          "noTLSVerify": false,
+          "originServerName": "",
+          "proxyAddress": "127.0.0.1",
+          "proxyPort": 0,
+          "proxyType": "",
+          "tcpKeepAlive": 30,
+          "tlsTimeout": 10
+        },
+        "path": null,
+        "service": "http://localhost:8081"
+      },
+      {
+        "Handlers": null,
+        "hostname": "dev-api.fixmymind.org",
+        "originRequest": {
+          "access": {
+            "audTag": null,
+            "teamName": ""
+          },
+          "bastionMode": false,
+          "caPool": "",
+          "connectTimeout": 30,
+          "disableChunkedEncoding": false,
+          "http2Origin": false,
+          "httpHostHeader": "",
+          "ipRules": null,
+          "keepAliveConnections": 100,
+          "keepAliveTimeout": 90,
+          "matchSNItoHost": false,
+          "noHappyEyeballs": false,
+          "noTLSVerify": false,
+          "originServerName": "",
+          "proxyAddress": "127.0.0.1",
+          "proxyPort": 0,
+          "proxyType": "",
+          "tcpKeepAlive": 30,
+          "tlsTimeout": 10
+        },
+        "path": null,
+        "service": "http://localhost:8080"
+      },
+      {
+        "Handlers": null,
+        "hostname": "",
+        "originRequest": {
+          "access": {
+            "audTag": null,
+            "teamName": ""
+          },
+          "bastionMode": false,
+          "caPool": "",
+          "connectTimeout": 30,
+          "disableChunkedEncoding": false,
+          "http2Origin": false,
+          "httpHostHeader": "",
+          "ipRules": null,
+          "keepAliveConnections": 100,
+          "keepAliveTimeout": 90,
+          "matchSNItoHost": false,
+          "noHappyEyeballs": false,
+          "noTLSVerify": false,
+          "originServerName": "",
+          "proxyAddress": "127.0.0.1",
+          "proxyPort": 0,
+          "proxyType": "",
+          "tcpKeepAlive": 30,
+          "tlsTimeout": 10
+        },
+        "path": null,
+        "service": "http_status:404"
+      }
+    ],
+    "originRequest": {
+      "access": {
+        "audTag": null,
+        "teamName": ""
+      },
+      "bastionMode": false,
+      "caPool": "",
+      "connectTimeout": 30,
+      "disableChunkedEncoding": false,
+      "http2Origin": false,
+      "httpHostHeader": "",
+      "ipRules": null,
+      "keepAliveConnections": 100,
+      "keepAliveTimeout": 90,
+      "matchSNItoHost": false,
+      "noHappyEyeballs": false,
+      "noTLSVerify": false,
+      "originServerName": "",
+      "proxyAddress": "127.0.0.1",
+      "proxyPort": 0,
+      "proxyType": "",
+      "tcpKeepAlive": 30,
+      "tlsTimeout": 10
+    },
+    "warp-routing": {}
+  },
+  "version": -1
+}

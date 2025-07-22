@@ -1,0 +1,35 @@
+{
+  "cli configuration": {
+    "result": "success"
+  },
+  "configuration": {
+    "result": "success"
+  },
+  "goroutine profile": {
+    "result": "success"
+  },
+  "heap profile": {
+    "result": "success"
+  },
+  "log information": {
+    "error": "error collecting logs: provided log configuration is invalid",
+    "result": "failure"
+  },
+  "metrics": {
+    "result": "success"
+  },
+  "network information": {
+    "error": "error finishing traceroute: exit status 1",
+    "result": "failure"
+  },
+  "raw network information": {
+    "error": "error finishing traceroute: exit status 1",
+    "result": "failure"
+  },
+  "system information": {
+    "result": "success"
+  },
+  "tunnel state": {
+    "result": "success"
+  }
+}

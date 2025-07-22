@@ -1,0 +1,33 @@
+{
+  "tunnelID": "d3849903-c0a9-45cc-b9fd-1381511e3ddc",
+  "connectorID": "1361f42d-5392-4cc2-b9e0-1d26b3934d90",
+  "connections": [
+    {
+      "isConnected": true,
+      "protocol": 1,
+      "edgeAddress": "198.41.192.107"
+    },
+    {
+      "isConnected": true,
+      "protocol": 1,
+      "edgeAddress": "198.41.200.63",
+      "index": 1
+    },
+    {
+      "isConnected": true,
+      "protocol": 1,
+      "edgeAddress": "198.41.192.227",
+      "index": 2
+    },
+    {
+      "isConnected": true,
+      "protocol": 1,
+      "edgeAddress": "198.41.200.13",
+      "index": 3
+    }
+  ],
+  "icmp_sources": [
+    "192.168.100.189",
+    "::1"
+  ]
+}
