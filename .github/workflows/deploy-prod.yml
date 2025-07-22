@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: runtime-env
-          path: $GITHUB_WORKSPACE/.env
+          path: .env
 
   deploy:
     needs: prepare-env
