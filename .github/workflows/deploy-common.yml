@@ -76,6 +76,23 @@ jobs:
           wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
           sudo dpkg -i cloudflared-linux-amd64.deb
 
+      - name: Set Fly.io Secrets
+        if: inputs.env-name == 'prod'
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          fly secrets set APP_KEY="${{ secrets.APP_KEY }}"
+          fly secrets set APP_URL="${{ secrets.APP_URL }}"
+          fly secrets set SUPABASE_URL="${{ secrets.SUPABASE_URL }}"
+          fly secrets set SUPABASE_KEY="${{ secrets.SUPABASE_KEY }}"
+          fly secrets set SUPABASE_JWK_URL="${{ secrets.SUPABASE_JWK_URL }}"
+          fly secrets set OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}"
+          fly secrets set ELEVENLABS_API_KEY="${{ secrets.ELEVENLABS_API_KEY }}"
+          fly secrets set ELEVENLABS_VOICE_ID="${{ secrets.ELEVENLABS_VOICE_ID }}"
+          fly secrets set STRIPE_KEY="${{ secrets.STRIPE_KEY }}"
+          fly secrets set STRIPE_SECRET="${{ secrets.STRIPE_SECRET }}"
+          fly secrets set STRIPE_WEBHOOK_SECRET="${{ secrets.STRIPE_WEBHOOK_SECRET }}"
+
       - name: Deploy to Production
         if: inputs.env-name == 'prod'
         env:

@@ -6,58 +6,11 @@ on:
       - main
 
 jobs:
-  prepare-env:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Generate .env for runtime
-        run: |
-          echo "APP_KEY=${{ secrets.APP_KEY_PROD }}" > .env
-          echo "APP_URL=https://api.fixmymind.org" >> .env
-          echo "FLY_API_TOKEN=${{ secrets.FLY_API_TOKEN }}" >> .env
-          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" >> .env
-          echo "SUPABASE_KEY=${{ secrets.SUPABASE_KEY }}" >> .env
-          echo "SUPABASE_JWK_URL=${{ secrets.SUPABASE_JWK_URL }}" >> .env
-          echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
-          echo "ELEVENLABS_API_KEY=${{ secrets.ELEVENLABS_API_KEY }}" >> .env
-          echo "ELEVENLABS_VOICE_ID=${{ secrets.ELEVENLABS_VOICE_ID }}" >> .env
-          echo "STRIPE_KEY=${{ secrets.STRIPE_KEY }}" >> .env
-          echo "STRIPE_SECRET=${{ secrets.STRIPE_SECRET }}" >> .env
-          echo "STRIPE_WEBHOOK_SECRET=${{ secrets.STRIPE_WEBHOOK_SECRET }}" >> .env
-
-      - name: Verify .env file exists
-        run: |
-          ls -la .env
-          echo "Contents of .env file:"
-          cat .env
-
-      - name: Upload .env artifact (optional backup)
-        uses: actions/upload-artifact@v4
-        with:
-          name: runtime-env
-          path: .env
-
   deploy:
-    needs: prepare-env
     uses: ./.github/workflows/deploy-common.yml
     with:
       env-name: prod
     secrets:
-      APP_KEY: ${{ secrets.APP_KEY_PROD }}
-      APP_URL: "https://api.fixmymind.org"
-      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-      SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-      SUPABASE_JWK_URL: ${{ secrets.SUPABASE_JWK_URL }}
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
-      ELEVENLABS_VOICE_ID: ${{ secrets.ELEVENLABS_VOICE_ID }}
-      STRIPE_KEY: ${{ secrets.STRIPE_KEY }}
-      STRIPE_SECRET: ${{ secrets.STRIPE_SECRET }}
-      STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
-    env:
       APP_KEY: ${{ secrets.APP_KEY_PROD }}
       APP_URL: "https://api.fixmymind.org"
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
