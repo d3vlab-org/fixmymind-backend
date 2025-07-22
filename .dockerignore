@@ -3,7 +3,7 @@
 .idea
 .DS_Store
 .env
-.env.*
+
 .phpunit.result.cache
 .scribe
 vendor/
