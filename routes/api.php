@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PricingController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\SubscriptionController;
@@ -19,6 +20,9 @@ Route::get('/checkout/cancel', fn () => view('checkout-cancel'));
 // Public routes
 Route::get('/health', fn () => response()->json(['status' => 'ok']));
 Route::get('/pricing.json', [PricingController::class, 'index']);
+
+// Chat routes
+Route::post('/chat', [ChatController::class, 'send']);
 
 // Temporarily disabled Firebase authentication until credentials are configured
 // Route::middleware(['firebase'])->group(function () {
