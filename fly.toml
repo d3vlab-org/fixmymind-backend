@@ -60,11 +60,11 @@ primary_region = 'fra'
     grace_period = '5s'
 
   [[services.http_checks]]
-    interval = '10s'
+    interval = '15s'
     timeout = '10s'
-    grace_period = '5s'
+    grace_period = '30s'
     method = 'get'
-    path = '/'
+    path = '/api/health'
     protocol = 'http'
     tls_skip_verify = false
 
@@ -75,10 +75,10 @@ primary_region = 'fra'
 [checks]
     [checks.http]
     type = "http"
-    interval = "10s"
-    timeout = "2s"
+    interval = "15s"
+    timeout = "10s"
     method = "get"
     path = "/api/health"
     protocol = "http"
-    grace_period = "5s"
+    grace_period = "30s"
     restart_limit = 0
