@@ -72,3 +72,13 @@ primary_region = 'fra'
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
+[checks]
+    [checks.http]
+    type = "http"
+    interval = "10s"
+    timeout = "2s"
+    method = "get"
+    path = "/api/health"
+    protocol = "http"
+    grace_period = "5s"
+    restart_limit = 0
